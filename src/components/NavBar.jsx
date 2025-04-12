@@ -8,7 +8,7 @@ export default function NavBar() {
 
 
   return (
-    <div className="flex h-full">
+    <div className="flex h-full sticky top-0 left-0">
       <div
         className={`bg-indigo-950 h-screen ${
           open ? "w-30" : " w-22"
