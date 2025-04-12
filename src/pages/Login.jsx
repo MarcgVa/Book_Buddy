@@ -7,32 +7,41 @@ import { useNavigate } from 'react-router-dom';
 
 export default function Login({setToken}) {
 
-  const [formData, setFormData] = useState([]);
+   const [loginData, setLoginData] = useState({
+     email: "",
+     password:"",
+   });
   const navigate = useNavigate();
   const [login] = useLoginMutation();
 
   const handleSubmit = (submit) => {
     submit.preventDefault();
     
-    const response = login(formData).unwrap();
+    const response = login(loginData).unwrap();
     if (response) { 
       navigate('/')
     }
-}
+  }
 
+    const handleUpdate = (e) => {
+      setLoginData((prev) => ({
+        ...prev,
+        [e.target.name]: e.target.value,
+      }));
+    };
 
 
 
 
 
   return (
-    <div className='container'>
+    <div className="container">
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
             alt="Book Buddy Library"
             src={logo}
-            className="mx-auto size-20 w-auto rounded-full"
+            className="mx-auto size-20 w-auto rounded-2xl"
           />
           <h2 className="mt-10 text-center text-2xl font-bold tracking-tight text-gray-900">
             Sign in to your account
@@ -40,7 +49,7 @@ export default function Login({setToken}) {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form action="#" method="POST" className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label
                 htmlFor="email"
@@ -56,6 +65,7 @@ export default function Login({setToken}) {
                   required
                   autoComplete="email"
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                  onChange={handleUpdate}
                 />
               </div>
             </div>
@@ -77,16 +87,16 @@ export default function Login({setToken}) {
                   required
                   autoComplete="current-password"
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                  onChange={handleUpdate}
                 />
               </div>
             </div>
             <div>
               <button
                 type="submit"
-                onSubmit={handleSubmit}
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold
                  text-white shadow-xs hover:bg-indigo-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-900"
-                >
+              >
                 Sign in
               </button>
             </div>

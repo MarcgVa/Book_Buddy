@@ -1,23 +1,99 @@
-import React from 'react'
+import React, { useState } from "react";
+import logo from "../assets/book_buddy_logo.png";
+import { useLoginMutation } from "../components/authSlice";
+import { useNavigate } from "react-router-dom";
+
+
 
 export default function Registration() {
+
+  const [regData, setRegData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password:"",
+  });
+  const navigate = useNavigate();
+  const [login] = useLoginMutation();
+
+  const handleSubmit = (submit) => {
+    submit.preventDefault();
+    
+    const response = login(regData).unwrap();
+    if (response) { 
+      navigate('/')
+    }
+}
+
+  const handleUpdate = (e) => {
+    setRegData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
+  };
+
+
+
+
+
+
   return (
-    <div>
+    <div className="container">
       Registration
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
             alt="Your Company"
-            src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-            className="mx-auto h-10 w-auto"
+            src={logo}
+            className="mx-auto size-30 w-auto rounded-2xl"
           />
           <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
-            Sign in to your account
+            Register for an account
           </h2>
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form action="#" method="POST" className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label
+                htmlFor="firstName"
+                className="block text-sm/6 font-medium text-gray-900"
+              >
+                First Name
+              </label>
+              <div className="mt-2">
+                <input
+                  id="firstName"
+                  name="firstName"
+                  type="text"
+                  required
+                  autoComplete="firstName"
+                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                  onChange={handleUpdate}
+                />
+              </div>
+            </div>
+
+            <div>
+              <label
+                htmlFor="lastName"
+                className="block text-sm/6 font-medium text-gray-900"
+              >
+                Last Name
+              </label>
+              <div className="mt-2">
+                <input
+                  id="lastName"
+                  name="lastName"
+                  type="text"
+                  required
+                  autoComplete="lastName"
+                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                  onChange={handleUpdate}
+                />
+              </div>
+            </div>
+
             <div>
               <label
                 htmlFor="email"
@@ -33,6 +109,7 @@ export default function Registration() {
                   required
                   autoComplete="email"
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                  onChange={handleUpdate}
                 />
               </div>
             </div>
@@ -45,14 +122,6 @@ export default function Registration() {
                 >
                   Password
                 </label>
-                <div className="text-sm">
-                  <a
-                    href="#"
-                    className="font-semibold text-indigo-600 hover:text-indigo-500"
-                  >
-                    Forgot password?
-                  </a>
-                </div>
               </div>
               <div className="mt-2">
                 <input
@@ -62,6 +131,7 @@ export default function Registration() {
                   required
                   autoComplete="current-password"
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                  onChange={handleUpdate}
                 />
               </div>
             </div>

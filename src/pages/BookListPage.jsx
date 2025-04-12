@@ -26,10 +26,10 @@ export default function BookListPage() {
           The Book Buddy Book List{" "}
         </p>
       </div>
-      <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4  gap-4 m-10">
+      <div className="grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 2xl:grid-cols-7 gap-4 m-10">
         {isLoading && <li>Loading books...</li>}
         {bookList.map((book) => (
-          <div key={book.id} className="flex size-auto justify-center hover:drop-shadow-xl hover:drop-shadow-indigo-500">
+          <div key={book.id} className="flex justify-center hover:drop-shadow-xl hover:drop-shadow-indigo-500">
               <img src={book.coverimage} alt={book.title} className="size-auto rounded-lg" />
           </div>
 
