@@ -1,7 +1,7 @@
 import React,{ useEffect, useState } from 'react'
 import { useGetAllBooksQuery } from '../components/bookSlice'
 import { useNavigate } from 'react-router-dom'
-
+import { Tooltip } from 'flowbite-react';
 
 export default function BookListPage() {
   const [bookList, setBookList] = useState([]);
@@ -29,9 +29,10 @@ export default function BookListPage() {
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4  gap-4 m-10">
         {isLoading && <li>Loading books...</li>}
         {bookList.map((book) => (
-          <div key={book.id} className="flex justify-center hover:drop-shadow-xl hover:drop-shadow-indigo-500">
-            <img src={book.coverimage} alt={book.title} className="size-auto rounded-lg" />
+          <div key={book.id} className="flex size-auto justify-center hover:drop-shadow-xl hover:drop-shadow-indigo-500">
+              <img src={book.coverimage} alt={book.title} className="size-auto rounded-lg" />
           </div>
+
         ))}
       </div>
     </div>
