@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 import logo from '../assets/book_buddy_logo.png'
-import { useLoginMutation } from '../components/authSlice';
+import { useLoginMutation } from '../components/loginSlice';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -14,10 +14,10 @@ export default function Login({setToken}) {
   const navigate = useNavigate();
   const [login] = useLoginMutation();
 
-  const handleSubmit = (submit) => {
+  const handleSubmit = async (submit) => {
     submit.preventDefault();
     
-    const response = login(loginData).unwrap();
+    const response = await login(loginData).unwrap();
     if (response) { 
       navigate('/')
     }

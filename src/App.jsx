@@ -5,17 +5,17 @@ import { useState } from 'react'
 import './style.css'
 
 function App() {
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState(()=>{localStorage.getItem('token')});
  //const navigate = useNavigate();
 
   return (
     <div className="flex">
       <Router>
-        <NavBar />
+        <NavBar token={token} />
         <Routes>
           <Route path="/" element={<HomePage />}></Route>
           <Route path="/bookList" element={<BookListPage token={token} />}></Route>
-          <Route path="/book/:bookId" element={<BookPage token={token } />}></Route>
+          <Route path="/book/:id" element={<BookPage token={token } />}></Route>
           <Route path="/account" element={<AccountPage token={token } />}></Route>
           <Route path="/login" element={<Login setToken={setToken} />}></Route>
           <Route path="/register" element={<Registration setToken={setToken} />}></Route>

@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { ChevronLeftIcon, HomeIcon, StarIcon, RectangleGroupIcon, UserIcon } from "@heroicons/react/20/solid";
 import { useNavigate } from "react-router-dom";
 
-export default function NavBar() {
+export default function NavBar({ token }) {
   const [open, setOpen] = useState(true);
   const navigate = useNavigate();
 
@@ -30,21 +30,6 @@ export default function NavBar() {
           </div>
 
           <div
-            className="inline-flex items-center cursor-pointer justify-start ml-2"
-            onClick={() => navigate("/account")}
-          >
-            <StarIcon
-              className={`text-amber-300 cursor-pointer block float-left 
-                ${open ? "w-4" : null}`}
-            />
-            <p
-              className={`text-amber-300 text-md ${!open ? "scale-0" : "ml-4"}`}
-            >
-              Favorites
-            </p>
-          </div>
-
-          <div
             className={`inline-flex items-center cursor-pointer justify-start ml-2`}
             onClick={() => navigate("/bookList")}
           >
@@ -55,6 +40,23 @@ export default function NavBar() {
               className={`text-amber-300 text-md ${!open ? "scale-0" : "ml-4"}`}
             >
               Books
+            </p>
+          </div>
+
+          <div
+            className={`${
+              !token ? "hidden" : null
+            } inline-flex items-center cursor-pointer justify-start ml-2`}
+            onClick={() => navigate("/account")}
+          >
+            <StarIcon
+              className={`text-amber-300 cursor-pointer block float-left 
+                ${open ? "w-4" : null}`}
+            />
+            <p
+              className={`text-amber-300 text-md ${!open ? "scale-0" : "ml-4"}`}
+            >
+              Account
             </p>
           </div>
 

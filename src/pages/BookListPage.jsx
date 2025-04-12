@@ -5,13 +5,17 @@ import { Tooltip } from 'flowbite-react';
 
 export default function BookListPage() {
   const [bookList, setBookList] = useState([]);
-
+  const navigate = useNavigate();
   const {status, isLoading, data} = useGetAllBooksQuery();
   
   const handleSearch = (search) => {
     console.log(search.target.value)
   }
 
+  const handleViewBook = (id) => {
+    console.log(id);
+    navigate(`/book/${id}`)
+  }
 
   useEffect(() => {
     if (status.toLowerCase() === 'fulfilled') {
@@ -29,8 +33,13 @@ export default function BookListPage() {
       <div className="grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 2xl:grid-cols-7 gap-4 m-10">
         {isLoading && <li>Loading books...</li>}
         {bookList.map((book) => (
-          <div key={book.id} className="flex justify-center hover:drop-shadow-xl hover:drop-shadow-indigo-500">
-              <img src={book.coverimage} alt={book.title} className="size-auto rounded-lg" />
+          <div
+            key={book?.id}
+            id={book?.id}
+            className="flex justify-center hover:drop-shadow-xl hover:drop-shadow-indigo-500"
+            onClick={()=>handleViewBook(book.id)}
+          >
+              <img src={book?.coverimage} alt={book?.title} className="size-auto rounded-lg" />
           </div>
 
         ))}

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import logo from "../assets/book_buddy_logo.png";
-import { useLoginMutation } from "../components/authSlice";
+import { useRegisterMutation } from "../components/authSlice";
 import { useNavigate } from "react-router-dom";
 
 
@@ -8,18 +8,18 @@ import { useNavigate } from "react-router-dom";
 export default function Registration() {
 
   const [regData, setRegData] = useState({
-    firstName: "",
-    lastName: "",
+    firstname: "",
+    lastname: "",
     email: "",
     password:"",
   });
   const navigate = useNavigate();
-  const [login] = useLoginMutation();
+  const [register] = useRegisterMutation();
 
-  const handleSubmit = (submit) => {
+  const handleSubmit = async (submit) => {
     submit.preventDefault();
     
-    const response = login(regData).unwrap();
+    const response = await register(regData).unwrap();
     if (response) { 
       navigate('/')
     }
@@ -56,18 +56,18 @@ export default function Registration() {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label
-                htmlFor="firstName"
+                htmlFor="firstname"
                 className="block text-sm/6 font-medium text-gray-900"
               >
                 First Name
               </label>
               <div className="mt-2">
                 <input
-                  id="firstName"
-                  name="firstName"
+                  id="firstname"
+                  name="firstname"
                   type="text"
                   required
-                  autoComplete="firstName"
+                  autoComplete="firstname"
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                   onChange={handleUpdate}
                 />
@@ -76,18 +76,18 @@ export default function Registration() {
 
             <div>
               <label
-                htmlFor="lastName"
+                htmlFor="lastname"
                 className="block text-sm/6 font-medium text-gray-900"
               >
                 Last Name
               </label>
               <div className="mt-2">
                 <input
-                  id="lastName"
-                  name="lastName"
+                  id="lastname"
+                  name="lastname"
                   type="text"
                   required
-                  autoComplete="lastName"
+                  autoComplete="lastname"
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                   onChange={handleUpdate}
                 />

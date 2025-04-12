@@ -1,4 +1,5 @@
 import { api } from "../app/api";
+import { createSlice } from "@reduxjs/toolkit";
 
 const authApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -9,14 +10,24 @@ const authApi = api.injectEndpoints({
         body: user,
       }),
     }),
-    login: builder.mutation({
-      query: ({ ...login }) => ({
-        url: '/users/login',
-        method: 'POST',
-        body: login,
-      }),
-    }),
   }),
 });
 
-export const {useRegisterMutation, useLoginMutation } = authApi;
+const storeToken = (state, { payload }) => {
+  localStorage.setItem('token', payload.token);
+};
+
+
+const registerSlice = createSlice({
+  name: 'register',
+  initialState: {},
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addMatcher(api.endpoints.register.matchFulfilled, storeToken);
+  },
+});
+
+
+export default registerSlice.reducer;
+
+export const {useRegisterMutation} = authApi;
