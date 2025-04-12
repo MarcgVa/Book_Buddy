@@ -1,23 +1,27 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { AccountPage, BookListPage, BookPage, HomePage } from './pages/allPages'
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom'
+import { AccountPage, BookListPage, BookPage, HomePage, Login, Registration } from './pages/allPages'
 import NavBar from './components/NavBar'
 import { useState } from 'react'
 import './style.css'
 
 function App() {
   const [token, setToken] = useState(null);
+ //const navigate = useNavigate();
 
   return (
-    <div className='flex'>
+    <div className="flex">
       <Router>
-        <NavBar/>
+        <NavBar />
         <Routes>
-          <Route path='/'element={<HomePage />}></Route>
-          <Route path="/bookList" element={<BookListPage />}></Route>
-          <Route path="/book/:bookId" element={<BookPage />}></Route>
-          <Route path="/account" element={<AccountPage/>}></Route>
+          <Route path="/" element={<HomePage />}></Route>
+          <Route path="/bookList" element={<BookListPage token={token} />}></Route>
+          <Route path="/book/:bookId" element={<BookPage token={token } />}></Route>
+          <Route path="/account" element={<AccountPage token={token } />}></Route>
+          <Route path="/login" element={<Login setToken={setToken} />}></Route>
+          <Route path="/login" element={<Registration setToken={setToken} />}></Route>
         </Routes>
       </Router>
+      
     </div>
   );
 }
