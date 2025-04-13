@@ -1,38 +1,32 @@
-import React,{useState} from 'react'
-import logo from '../assets/book_buddy_logo.png'
-import { useLoginMutation } from '../components/loginSlice';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import logo from "../assets/book_buddy_logo.png";
+import { useLoginMutation } from "../components/usersSlice";
+import { useNavigate } from "react-router-dom";
 
-
-
-export default function Login({setToken}) {
-
-   const [loginData, setLoginData] = useState({
-     email: "",
-     password:"",
-   });
+export default function Login({ setToken }) {
+  const [loginData, setLoginData] = useState({
+    email: "",
+    password: "",
+  });
   const navigate = useNavigate();
   const [login] = useLoginMutation();
 
   const handleSubmit = async (submit) => {
     submit.preventDefault();
-    
+
     const response = await login(loginData).unwrap();
-    if (response) { 
-      navigate('/')
+    if (response) {
+      setToken(response.token);
+      navigate("/");
     }
-  }
+  };
 
-    const handleUpdate = (e) => {
-      setLoginData((prev) => ({
-        ...prev,
-        [e.target.name]: e.target.value,
-      }));
-    };
-
-
-
-
+  const handleUpdate = (e) => {
+    setLoginData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
   return (
     <div className="container">
@@ -46,6 +40,14 @@ export default function Login({setToken}) {
           <h2 className="mt-10 text-center text-2xl font-bold tracking-tight text-gray-900">
             Sign in to your account
           </h2>
+          <p
+            className="mx-20 flex justify-center text-center  text-indigo-200
+              bg-linear-to-r from-indigo-300 from-5% to-indigo-700 rounded-md
+              cursor-pointer"  
+            onClick={()=>navigate('/register')}
+          >
+            New Account
+          </p>
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">

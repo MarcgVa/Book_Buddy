@@ -3,7 +3,7 @@ import { useGetAllBooksQuery } from '../components/bookSlice'
 import { useNavigate } from 'react-router-dom'
 import { Tooltip } from 'flowbite-react';
 
-export default function BookListPage() {
+export default function BookListPage({ token }) {
   const [bookList, setBookList] = useState([]);
   const navigate = useNavigate();
   const {status, isLoading, data} = useGetAllBooksQuery();
@@ -13,8 +13,7 @@ export default function BookListPage() {
   }
 
   const handleViewBook = (id) => {
-    console.log(id);
-    navigate(`/book/${id}`)
+    token ? navigate(`/book/${id}`) : navigate('/login')
   }
 
   useEffect(() => {
@@ -36,12 +35,18 @@ export default function BookListPage() {
           <div
             key={book?.id}
             id={book?.id}
-            className="flex justify-center hover:drop-shadow-xl hover:drop-shadow-indigo-500"
-            onClick={()=>handleViewBook(book.id)}
+            className="border flex flex-col justify-center hover:drop-shadow-xl hover:drop-shadow-indigo-500"
+            onClick={() => handleViewBook(book.id)}
           >
-              <img src={book?.coverimage} alt={book?.title} className="size-auto rounded-lg" />
+            <img
+              src={book?.coverimage}
+              alt={book?.title}
+              className="size-auto rounded-lg"
+            />
+            <div>
+              <p className='text-4xl p-1'>{book?.available.toString()}</p>
+            </div>
           </div>
-
         ))}
       </div>
     </div>

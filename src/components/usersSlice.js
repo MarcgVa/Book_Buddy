@@ -1,7 +1,7 @@
 import { api } from "../app/api";
 import { createSlice } from "@reduxjs/toolkit";
 
-const loginApi = api.injectEndpoints({
+const userApi = api.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation({
       query: ({ ...login }) => ({
@@ -9,12 +9,21 @@ const loginApi = api.injectEndpoints({
         method: 'POST',
         body: login,
       }),
+      invalidatesTags: ["User"],
+    }),
+    getAccount: builder.query({
+      query: () => ({
+        url: '/users/me',
+        method: 'GET',
+      }),
+      providesTags:["User"]
     }),
   }),
 });
 
 const storeToken = (state, { payload }) => {
-  localStorage.setItem('token', payload.token);
+  state.token = payload.token;
+  sessionStorage.setItem('token', payload.token);
 };
 
 
@@ -30,4 +39,4 @@ const loginSlice = createSlice({
 
 export default loginSlice.reducer;
 
-export const { useLoginMutation } = loginApi;
+export const { useLoginMutation, useGetAccountQuery } = userApi;
