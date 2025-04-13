@@ -18,7 +18,7 @@ export default function NavBar({ token, setToken }) {
   return (
     <div className="flex h-full sticky top-0 left-0">
       <div
-        className={`bg-indigo-950 h-screen ${
+        className={`bg-sky-950 h-screen ${
           open ? "w-35" : " w-15"
         } duration-300 relative`}
       >
@@ -28,10 +28,10 @@ export default function NavBar({ token, setToken }) {
             onClick={() => navigate("/")}
           >
             <HomeIcon
-              className={`text-amber-300 w-4 cursor-pointer block float-left`}
+              className={`text-sky-200 w-5 cursor-pointer block float-left`}
             />
             <p
-              className={`text-amber-300 text-md ${!open ? "scale-0" : "ml-4"}`}
+              className={`text-sky-200 text-md ${!open ? "hidden" : "ml-4"}`}
             >
               Home
             </p>
@@ -42,10 +42,10 @@ export default function NavBar({ token, setToken }) {
             onClick={() => navigate("/bookList")}
           >
             <BookOpenIcon
-              className={`text-amber-300 w-4 float-left justify-center`}
+              className={`text-sky-200 w-5 float-left justify-center`}
             />
             <p
-              className={`text-amber-300 text-md ${!open ? "scale-0" : "ml-4"}`}
+              className={`text-sky-200 text-md ${!open ? "hidden" : "ml-4"}`}
             >
               Books
             </p>
@@ -56,14 +56,12 @@ export default function NavBar({ token, setToken }) {
             onClick={() => handleNavigation("/account")}
           >
             <UserIcon
-              className={`${
-                !token ? "hidden" : null
-              } text-amber-300 cursor-pointer block float-left 
-                ${open ? "w-4" : null}`}
+              className={`${!token ? "hidden" : null
+                } text-sky-200 w-5 cursor-pointer block float-left`}
             />
             <p
-              className={`${!token ? "hidden" : null} text-amber-300 text-md ${
-                !open ? "scale-0" : "ml-4"
+              className={`${!token ? "hidden" : null} text-sky-200 text-md ${
+                !open ? "hidden" : "ml-4"
               }`}
             >
               Account
@@ -76,10 +74,10 @@ export default function NavBar({ token, setToken }) {
           >
             {!token ? (
               <>
-                <LockClosedIcon className={`text-amber-300 text-md w-4`} />
+                <LockClosedIcon className="text-sky-200 text-md w-5" />
                 <p
-                  className={`text-amber-300 text-md ${
-                    !open ? "scale-0" : "ml-4"
+                  className={`text-sky-200 text-md ${
+                    !open ? "hidden" : "ml-4"
                   }`}
                 >
                   Login
@@ -87,10 +85,10 @@ export default function NavBar({ token, setToken }) {
               </>
             ) : (
               <div onClick={handleLogout} className="inline-flex">
-                <LockOpenIcon className={`text-amber-300 text-md w-4`} />
+                <LockOpenIcon className="text-sky-200 text-md w-5" />
                 <p
-                  className={`text-amber-300 text-md ${
-                    !open ? "scale-0" : "ml-4"
+                  className={`text-sky-200 text-md ${
+                    !open ? "hidden" : "ml-4"
                   }`}
                 >
                   Logout
@@ -100,7 +98,7 @@ export default function NavBar({ token, setToken }) {
           </div>
         </div>
         <ChevronLeftIcon
-          className={`text-white w-6 absolute -right-0 bottom-4 cursor-pointer ${
+          className={`text-sky-200 w-8 absolute -right-0 bottom-4 cursor-pointer ${
             !open && "rotate-180"
           }`}
           onClick={() => setOpen(!open)}

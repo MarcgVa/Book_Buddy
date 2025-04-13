@@ -2,6 +2,7 @@ import React,{ useEffect, useState } from 'react'
 import { useGetAllBooksQuery } from '../components/bookSlice'
 import { useNavigate } from 'react-router-dom'
 import { Tooltip } from 'flowbite-react';
+import checkedOut from '../assets/CheckedOut.svg'
 
 export default function BookListPage({ token }) {
   const [bookList, setBookList] = useState([]);
@@ -25,7 +26,8 @@ export default function BookListPage({ token }) {
   return (
     <div className="container max-w-[1224px] w-[90%]">
       <div className="flex justify-center">
-        <p className="w-max p-3 text-5xl text-indigo-900 font-bold tracking-wider text-shadow-lg text-shadow-indigo-100">
+        <p className="w-max p-3 text-5xl text-sky-600 font-bold tracking-wider 
+        text-shadow-md text-shadow-red-900">
           The Book Buddy Book List{" "}
         </p>
       </div>
@@ -35,16 +37,20 @@ export default function BookListPage({ token }) {
           <div
             key={book?.id}
             id={book?.id}
-            className="border flex flex-col justify-center hover:drop-shadow-xl hover:drop-shadow-indigo-500"
+            className="flex flex-col justify-center hover:drop-shadow-xl hover:drop-shadow-indigo-500"
             onClick={() => handleViewBook(book.id)}
           >
-            <img
-              src={book?.coverimage}
-              alt={book?.title}
-              className="size-auto rounded-lg"
-            />
-            <div>
-              <p className='text-4xl p-1'>{book?.available.toString()}</p>
+            <div className="relative">
+              <img
+                src={checkedOut}
+                alt=""
+                className={`absolute bottom-0.5  ${book?.available ? 'hidden':null} z-20`}
+              />
+              <img
+                src={book?.coverimage}
+                alt={book?.title}
+                className="size-auto rounded-lg z-10"
+              />
             </div>
           </div>
         ))}
