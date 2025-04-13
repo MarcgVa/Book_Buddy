@@ -10,7 +10,7 @@ export default function NavBar({ token, setToken }) {
     token? navigate(page) : navigate('/login');
   }
   const handleLogout = () => {
-    sessionStorage.clear();
+    localStorage.clear();
     setToken(null);
     navigate('/');
   }

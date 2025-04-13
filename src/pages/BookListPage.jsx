@@ -2,6 +2,7 @@ import React,{ useEffect, useState } from 'react'
 import { useGetAllBooksQuery } from '../components/bookSlice'
 import { useNavigate } from 'react-router-dom'
 import { Tooltip } from 'flowbite-react';
+import checkedOut from '../assets/CheckedOut.svg'
 
 export default function BookListPage({ token }) {
   const [bookList, setBookList] = useState([]);
@@ -35,16 +36,20 @@ export default function BookListPage({ token }) {
           <div
             key={book?.id}
             id={book?.id}
-            className="border flex flex-col justify-center hover:drop-shadow-xl hover:drop-shadow-indigo-500"
+            className="flex flex-col justify-center hover:drop-shadow-xl hover:drop-shadow-indigo-500"
             onClick={() => handleViewBook(book.id)}
           >
-            <img
-              src={book?.coverimage}
-              alt={book?.title}
-              className="size-auto rounded-lg"
-            />
-            <div>
-              <p className='text-4xl p-1'>{book?.available.toString()}</p>
+            <div className="relative">
+              <img
+                src={checkedOut}
+                alt=""
+                className={`absolute bottom-0.5  ${book?.available ? 'hidden':null} z-20`}
+              />
+              <img
+                src={book?.coverimage}
+                alt={book?.title}
+                className="size-auto rounded-lg z-10"
+              />
             </div>
           </div>
         ))}

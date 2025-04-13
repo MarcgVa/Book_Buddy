@@ -1,7 +1,6 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useGetAccountQuery } from '../components/usersSlice';
-import { useGetBookQuery } from '../components/bookSlice';
 import { useCheckInBookMutation } from '../components/bookReservationSlice';
 
 
@@ -17,6 +16,7 @@ export default function AccountPage({ token }) {
     try {
       const response = await checkInBook(id).unwrap();
       if (response) {
+
         navigate("/account");
       }      
     } catch (error) {
@@ -25,17 +25,13 @@ export default function AccountPage({ token }) {
   }
 
   useEffect(() => {
+    if (status.toLowerCase() === "fulfilled") {
+      setAccount(user);
+    }
     if (!token){navigate("/login")};
 
   }, []);
 
-
-  useLayoutEffect(() => {
-    if (status.toLowerCase() === "fulfilled" ) {
-      setAccount(user);
-    }
-
-  }, [status]);
   
   return (
     <div className="flex flex-col h-full w-full">
@@ -68,43 +64,40 @@ export default function AccountPage({ token }) {
         </div>
       </div>
 
-      <div className="mt-20 m-3 relative flex flex-col w-[70%] h-[90%] overflow-scroll text-gray-700 shadow-md bg-clip-border">
-        <div>
-          <table className="text-left table-auto min-w-max">
-            <thead className="table-header-group bg-indigo-950">
-              <tr>
-                <th colSpan={3} className="text-2xl">
-                  Reserved Books:
-                </th>
+      <div className="ml-10">
+        <table className="table-fixed mt-20 m-3 mr-10 flex flex-col overflow-scroll text-gray-700 shadow-md bg-clip-border">
+          <thead className="table bg-indigo-950">
+            <tr>
+              <th colSpan={3} className="text-2xl text-lime-400">
+                Reserved Books:
+              </th>
+            </tr>
+            <tr className=' flex justify-evenly'>
+              <th className="text-lime-400">Book Title</th>
+              <th className="text-lime-400">Author</th>
+              <th className="text-lime-400">Book Cover</th>
+            </tr>
+          </thead>
+          <tbody className="table  ml-5 mb-5">
+            {account?.reservations.map((res) => (
+              <tr key={res?.id} className=''>
+                <td className="table-cell ">{res?.title}</td>
+                <td className='table-cell text-start'>{res?.author}</td>
+                <td className="table-cell text-center  pt-5">
+                  <img src={res?.coverimage} alt="" className="w-25" />
+                </td>
+                <td className=''>
+                  <button
+                    onClick={() => handleCheckInBook(res?.id)}
+                    className="bg-emerald-900 px-2 text-center rounded-2xl text-[10px] text-white"
+                  >
+                    Check In
+                  </button>
+                </td>
               </tr>
-              <tr>
-                <th className="p-1 pr-3">Book Title</th>
-                <th className="p-1 pr-3">Author</th>
-                <th className="p-1 pr-3">Book Cover</th>
-              </tr>
-            </thead>
-            <tbody className="table-row-group">
-              {account?.reservations.map((res) => (
-                <tr key={res?.id}>
-                  <td className="">{res?.title}</td>
-                  <td>{res?.author}</td>
-                  <td className="justify-center">
-                    <img src={res?.coverimage} alt="" className="w-15" />
-                  </td>
-                  <td>
-                    <button onClick={() => handleCheckInBook(res?.id)}
-                      className="bg-emerald-900 px-2 text-center rounded-2xl text-[10px] text-white"
-                    >
-                      Check In
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <p className="text-2xl"></p>
-          <div key={account?.reservations.id}></div>
-        </div>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
