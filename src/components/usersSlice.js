@@ -22,8 +22,9 @@ const userApi = api.injectEndpoints({
 });
 
 const storeToken = (state, { payload }) => {
+  console.log('storeToken', payload);
   state.token = payload.token;
-  localStorage.setItem('token', payload.token);
+  sessionStorage.setItem('token', payload.token);
 };
 
 

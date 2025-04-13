@@ -26,7 +26,8 @@ export default function BookListPage({ token }) {
   return (
     <div className="container max-w-[1224px] w-[90%]">
       <div className="flex justify-center">
-        <p className="w-max p-3 text-5xl text-indigo-900 font-bold tracking-wider text-shadow-lg text-shadow-indigo-100">
+        <p className="w-max p-3 text-5xl text-sky-600 font-bold tracking-wider 
+        text-shadow-md text-shadow-red-900">
           The Book Buddy Book List{" "}
         </p>
       </div>

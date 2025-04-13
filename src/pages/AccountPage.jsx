@@ -8,10 +8,16 @@ export default function AccountPage({ token }) {
   const navigate = useNavigate;
   const { status, data: user } = useGetAccountQuery();
   const [checkInBook] = useCheckInBookMutation();
-  const [account, setAccount] = useState(user);
+  const [account, setAccount] = useState({
+    firstname: "",
+    lastname: "",
+    email: "",
+    id: "",
+    reservations: [],
+  });
 
   console.log('account', account);
-
+  console.log('AcctPgToken', token);
   const handleCheckInBook = async (id) => { 
     try {
       const response = await checkInBook(id).unwrap();
@@ -30,7 +36,7 @@ export default function AccountPage({ token }) {
     }
     if (!token){navigate("/login")};
 
-  }, []);
+  }, [status]);
 
   
   return (
@@ -65,31 +71,42 @@ export default function AccountPage({ token }) {
       </div>
 
       <div className="ml-10">
-        <table className="table-fixed mt-20 m-3 mr-10 flex flex-col overflow-scroll text-gray-700 shadow-md bg-clip-border">
-          <thead className="table bg-indigo-950">
+        <table className="table-fixed mt-20 m-3 mr-10 flex flex-col overflow-scroll bg-clip-border rounded-2xl">
+          <caption
+            className="caption-top m-0 p-5 bg-linear-to-b to-blue-400 from-55% from-emerald-600
+                text-sky-100 flex justify-center text-3xl text-shadow-lg text-shadow-blue-900 "
+          >
+            Reserved Books
+          </caption>
+          <thead className="table flex bg-linear-to-b from-blue-400 to-55% to-emerald-600">
             <tr>
-              <th colSpan={3} className="text-2xl text-lime-400">
-                Reserved Books:
-              </th>
+              <th colSpan={3} className="col-span-3 "></th>
             </tr>
-            <tr className=' flex justify-evenly'>
-              <th className="text-lime-400">Book Title</th>
-              <th className="text-lime-400">Author</th>
-              <th className="text-lime-400">Book Cover</th>
+            <tr>
+              <th className="text-sky-100 text-shadow-lg text-shadow-blue-900 text-2xl py-4">
+                Book Title
+              </th>
+              <th className="text-sky-100 text-shadow-lg text-shadow-blue-900 text-2xl py-4">
+                Author
+              </th>
+              <th className="text-sky-100 text-shadow-lg text-shadow-blue-900 text-2xl py-4">
+                Book Cover
+              </th>
+              <th className="text-emerald-600">bookch</th>
             </tr>
           </thead>
-          <tbody className="table  ml-5 mb-5">
+          <tbody className="table mb-15 bg-gray-200 rounded-b-2xl">
             {account?.reservations.map((res) => (
-              <tr key={res?.id} className=''>
-                <td className="table-cell ">{res?.title}</td>
-                <td className='table-cell text-start'>{res?.author}</td>
-                <td className="table-cell text-center  pt-5">
+              <tr key={res?.id} className="">
+                <td className="table-cell text-center">{res?.title}</td>
+                <td className="table-cell text-center">{res?.author}</td>
+                <td className="flex justify-center items-center pt-5 mb-5">
                   <img src={res?.coverimage} alt="" className="w-25" />
                 </td>
-                <td className=''>
+                <td className="">
                   <button
                     onClick={() => handleCheckInBook(res?.id)}
-                    className="bg-emerald-900 px-2 text-center rounded-2xl text-[10px] text-white"
+                    className="cursor-pointer bg-linear-to-br from-blue-400 to-emerald-700 px-4 m-0 text-center rounded-2xl text-[14pts] text-white"
                   >
                     Check In
                   </button>
