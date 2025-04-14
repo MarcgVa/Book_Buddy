@@ -10,7 +10,7 @@ export default function NavBar({ token, setToken }) {
     token? navigate(page) : navigate('/login');
   }
   const handleLogout = () => {
-    sessionStorage.clear();
+    localStorage.removeItem('token');
     setToken(null);
     navigate('/');
   }
@@ -23,60 +23,58 @@ export default function NavBar({ token, setToken }) {
         } duration-300 relative`}
       >
         <div className="flex flex-col">
+          {/* Home */}
           <div
             className="inline-flex items-center mt-6 justify-start ml-2"
             onClick={() => navigate("/")}
           >
-            <HomeIcon
-              className={`text-sky-200 w-5 cursor-pointer block float-left`}
-            />
-            <p
-              className={`text-sky-200 text-md ${!open ? "hidden" : "ml-4"}`}
-            >
+            <p>
+              <span className="material-icons text-sky-200">home</span>
+            </p>
+            <p className={`text-sky-200 text-md ${!open ? "hidden" : "ml-4"}`}>
               Home
             </p>
           </div>
 
+          {/* Books */}
           <div
             className={`inline-flex items-center cursor-pointer justify-start ml-2`}
             onClick={() => navigate("/bookList")}
           >
-            <BookOpenIcon
-              className={`text-sky-200 w-5 float-left justify-center`}
-            />
-            <p
-              className={`text-sky-200 text-md ${!open ? "hidden" : "ml-4"}`}
-            >
+            <p className="text-sky-200">
+              <span className="material-icons">library_books</span>
+            </p>
+            <p className={`text-sky-200 text-md ${!open ? "hidden" : "ml-4"}`}>
               Books
             </p>
           </div>
 
+          {/* Account */}
           <div
-            className={`inline-flex items-center cursor-pointer justify-start ml-2`}
+            className={`${!token ? "hidden" : null}  
+                inline-flex items-center cursor-pointer justify-start ml-2`}
             onClick={() => handleNavigation("/account")}
           >
-            <UserIcon
-              className={`${!token ? "hidden" : null
-                } text-sky-200 w-5 cursor-pointer block float-left`}
-            />
-            <p
-              className={`${!token ? "hidden" : null} text-sky-200 text-md ${
-                !open ? "hidden" : "ml-4"
-              }`}
-            >
+            <p className="text-sky-200">
+              <span className="material-icons">settings</span>
+            </p>
+            <p className={` text-sky-200 text-md ${!open ? "hidden" : "ml-4"}`}>
               Account
             </p>
           </div>
 
+          {/* Login */}
           <div
             onClick={() => navigate("/login")}
             className="inline-flex items-center cursor-pointer justify-start ml-2"
           >
             {!token ? (
               <>
-                <LockClosedIcon className="text-sky-200 text-md w-5" />
+                <p className="text-sky-200">
+                  <span className="material-icons">login</span>
+                </p>
                 <p
-                  className={`text-sky-200 text-md ${
+                  className={`text-sky-200 text-md flex ${
                     !open ? "hidden" : "ml-4"
                   }`}
                 >
@@ -84,8 +82,11 @@ export default function NavBar({ token, setToken }) {
                 </p>
               </>
             ) : (
+              // * Logout *
               <div onClick={handleLogout} className="inline-flex">
-                <LockOpenIcon className="text-sky-200 text-md w-5" />
+                <p className="text-sky-200">
+                  <span className="material-icons">logout</span>
+                </p>
                 <p
                   className={`text-sky-200 text-md ${
                     !open ? "hidden" : "ml-4"
@@ -97,12 +98,17 @@ export default function NavBar({ token, setToken }) {
             )}
           </div>
         </div>
-        <ChevronLeftIcon
-          className={`text-sky-200 w-8 absolute -right-0 bottom-4 cursor-pointer ${
-            !open && "rotate-180"
-          }`}
-          onClick={() => setOpen(!open)}
-        />
+        <div onClick={()=>setOpen(!open)}>
+          {!open ? (
+            <span className="material-icons text-sky-200 absolute -right-0 bottom-4 cursor-pointer">
+              chevron_right
+            </span>
+          ) : (
+            <span className="material-icons text-sky-200 absolute -right-0 bottom-4 cursor-pointer">
+              chevron_left
+            </span>
+          )}
+        </div>
       </div>
     </div>
   );

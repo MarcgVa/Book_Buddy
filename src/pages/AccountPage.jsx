@@ -1,13 +1,16 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useGetAccountQuery } from '../components/usersSlice';
-import { useCheckInBookMutation } from '../components/bookReservationSlice';
+import { useCheckInBookMutation, useGetReservationsQuery } from '../components/bookReservationSlice';
 
 
-export default function AccountPage({ token }) {
+export default function AccountPage() {
   const navigate = useNavigate;
+    const [checkInBook] = useCheckInBookMutation();
   const { status, data: user } = useGetAccountQuery();
-  const [checkInBook] = useCheckInBookMutation();
+  const { status: resStatus,data: updateReservations } = useGetReservationsQuery();
+
+  const [reservations, setReservations] = useState([]);
   const [account, setAccount] = useState({
     firstname: "",
     lastname: "",
@@ -16,28 +19,32 @@ export default function AccountPage({ token }) {
     reservations: [],
   });
 
-  console.log('account', account);
-  console.log('AcctPgToken', token);
   const handleCheckInBook = async (id) => { 
     try {
       const response = await checkInBook(id).unwrap();
       if (response) {
-
-        navigate("/account");
+        setReservations([]);
       }      
     } catch (error) {
       console.error(error.message)
     }
   }
 
+  useEffect(() => { 
+    localStorage.getItem('token') ? null : navigate('/login')
+  }, [])
+
   useEffect(() => {
     if (status.toLowerCase() === "fulfilled") {
       setAccount(user);
     }
-    if (!token){navigate("/login")};
-
   }, [status]);
 
+  useEffect(() => {
+    if(resStatus.toLowerCase() === 'fulfilled'){
+      setReservations(updateReservations);
+    }
+  }, [resStatus])
   
   return (
     <div className="flex flex-col h-full w-full">
@@ -96,7 +103,7 @@ export default function AccountPage({ token }) {
             </tr>
           </thead>
           <tbody className="table mb-15 bg-gray-200 rounded-b-2xl">
-            {account?.reservations.map((res) => (
+            {reservations.map((res) => (
               <tr key={res?.id} className="">
                 <td className="table-cell text-center">{res?.title}</td>
                 <td className="table-cell text-center">{res?.author}</td>

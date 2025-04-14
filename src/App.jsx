@@ -1,12 +1,15 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { AccountPage, BookListPage, BookPage, HomePage, Login, MyBooksPage, Registration } from './pages/allPages'
 import NavBar from './components/NavBar'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './style.css'
 
 function App() {
   const [token, setToken] = useState(null);
 
+  useEffect(() => {
+    setToken(localStorage.getItem('token'));
+  },[]);
 
   return (
     <div className="flex">
