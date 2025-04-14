@@ -10,10 +10,8 @@ export default function AccountPage() {
   const navigate = useNavigate;
   const [checkInBook] = useCheckInBookMutation();
   const { status, data: user } = useGetAccountQuery();
-  const { status: resStatus, data: reservationList } =
-    useGetReservationsQuery();
-  console.log("resStatus", resStatus);
-  console.log("ResList", reservationList);
+  const { status: resStatus, data: reservationList } = useGetReservationsQuery();
+
 
   const [account, setAccount] = useState({
     firstname: "",
