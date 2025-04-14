@@ -40,14 +40,6 @@ export default function Login({ setToken }) {
           <h2 className="mt-10 text-center text-2xl font-bold tracking-tight text-gray-900">
             Sign in to your account
           </h2>
-          <p
-            className="mx-20 flex justify-center text-center text-black text-shadow-xs text-shadow-white
-              bg-linear-to-r from-blue-300 from-35% to-red-700 rounded-md
-              cursor-pointer"
-            onClick={() => navigate("/register")}
-          >
-            New Account
-          </p>
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -103,6 +95,21 @@ export default function Login({ setToken }) {
               </button>
             </div>
           </form>
+
+          {/* Registration  */}
+          <div className="flex-col w-100 justify-center items-center mt-2">
+            <p className="flex w-100 justify-center pt-3 text-sm">
+              Don't have an account?{" "}
+            </p>
+            <div
+              className="flex m-auto justify-center cursor-pointer w-25
+              text-xs text-center text-white text-shadow-xs text-shadow-blue-900
+              bg-linear-to-r from-blue-400 from-35% to-red-700 rounded-md"
+              onClick={() => navigate("/register")}
+            >
+              Sign Up
+            </div>
+          </div>
         </div>
       </div>
     </div>
