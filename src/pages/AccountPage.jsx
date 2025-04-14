@@ -1,16 +1,20 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useGetAccountQuery } from '../components/usersSlice';
-import { useCheckInBookMutation, useGetReservationsQuery } from '../components/bookReservationSlice';
-
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useGetAccountQuery } from "../services/authService";
+import {
+  useCheckInBookMutation,
+  useGetReservationsQuery,
+} from "../services/bookService";
 
 export default function AccountPage() {
   const navigate = useNavigate;
-    const [checkInBook] = useCheckInBookMutation();
+  const [checkInBook] = useCheckInBookMutation();
   const { status, data: user } = useGetAccountQuery();
-  const { status: resStatus,data: updateReservations } = useGetReservationsQuery();
+  const { status: resStatus, data: reservationList } =
+    useGetReservationsQuery();
+  console.log("resStatus", resStatus);
+  console.log("ResList", reservationList);
 
-  const [reservations, setReservations] = useState([]);
   const [account, setAccount] = useState({
     firstname: "",
     lastname: "",
@@ -19,20 +23,19 @@ export default function AccountPage() {
     reservations: [],
   });
 
-  const handleCheckInBook = async (id) => { 
-    try {
-      const response = await checkInBook(id).unwrap();
-      if (response) {
-        setReservations([]);
-      }      
-    } catch (error) {
-      console.error(error.message)
-    }
-  }
+  const [reservations, setReservations] = useState([]);
 
-  useEffect(() => { 
-    localStorage.getItem('token') ? null : navigate('/login')
-  }, [])
+  const handleCheckInBook = async (id) => {
+    try {
+      await checkInBook(id).unwrap();
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    localStorage.getItem("token") ? null : navigate("/login");
+  }, []);
 
   useEffect(() => {
     if (status.toLowerCase() === "fulfilled") {
@@ -41,11 +44,12 @@ export default function AccountPage() {
   }, [status]);
 
   useEffect(() => {
-    if(resStatus.toLowerCase() === 'fulfilled'){
-      setReservations(updateReservations);
-    }
-  }, [resStatus])
-  
+    setAccount((prev) => ({
+      ...prev,
+      reservations: reservationList,
+    }));
+  }, [resStatus]);
+
   return (
     <div className="flex flex-col h-full w-full">
       <p className="m-4 text-3xl font-bold tracking-wider text-shadow-md text-shadow-indigo-200">
@@ -103,7 +107,7 @@ export default function AccountPage() {
             </tr>
           </thead>
           <tbody className="table mb-15 bg-gray-200 rounded-b-2xl">
-            {reservations.map((res) => (
+            {account?.reservations?.map((res) => (
               <tr key={res?.id} className="">
                 <td className="table-cell text-center">{res?.title}</td>
                 <td className="table-cell text-center">{res?.author}</td>

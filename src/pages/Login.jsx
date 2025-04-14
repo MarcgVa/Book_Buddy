@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import logo from "../assets/book_buddy_logo.png";
-import { useLoginMutation } from "../components/usersSlice";
+import { useLoginMutation } from "../services/authService";
 import { useNavigate } from "react-router-dom";
 
 export default function Login({ setToken }) {
@@ -43,8 +43,8 @@ export default function Login({ setToken }) {
           <p
             className="mx-20 flex justify-center text-center text-black text-shadow-xs text-shadow-white
               bg-linear-to-r from-blue-300 from-35% to-red-700 rounded-md
-              cursor-pointer"  
-            onClick={()=>navigate('/register')}
+              cursor-pointer"
+            onClick={() => navigate("/register")}
           >
             New Account
           </p>
@@ -96,8 +96,8 @@ export default function Login({ setToken }) {
             <div>
               <button
                 type="submit"
-                className="flex w-full justify-center rounded-md bg-red-600 px-3 py-1.5 text-sm/6 font-semibold
-                 text-white shadow-xs hover:bg-red-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-900"
+                className="flex w-full justify-center rounded-md px-3 py-1.5 text-sm/6 font-semibold
+                 text-blue-400 shadow-xs hover:bg-red-700 focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-red-900"
               >
                 Sign in
               </button>
