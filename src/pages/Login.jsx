@@ -3,7 +3,7 @@ import logo from "../assets/book_buddy_logo.png";
 import { useLoginMutation } from "../services/authService";
 import { useNavigate } from "react-router-dom";
 
-export default function Login({ setToken }) {
+export default function Login() {
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
@@ -16,7 +16,6 @@ export default function Login({ setToken }) {
 
     const response = await login(loginData).unwrap();
     if (response) {
-      setToken(response.token);
       navigate("/");
     }
   };

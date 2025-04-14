@@ -12,12 +12,7 @@ export default function NavBar() {
   };
   const handleLogout = async () => {
     localStorage.removeItem("token");
-    try {
-      await logout();
-    } catch (error) {
-      console.error(error.message);
-    }
-
+    await logout();
     navigate("/");
   };
 

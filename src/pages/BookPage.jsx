@@ -7,7 +7,9 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import book from "../assets/book.png";
 
-export default function BookPage({ token }) {
+
+
+export default function BookPage() {
   const { bookid } = useParams();
   const { data } = useGetBookQuery(bookid);
   const [checkOutBook] = useCheckOutBookMutation();
@@ -22,7 +24,7 @@ export default function BookPage({ token }) {
   };
 
   useEffect(() => {
-    !token ? navigate("/login") : null;
+    localStorage.getItem("token") ? null : navigate("/login");
   }, []);
 
   return (

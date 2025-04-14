@@ -4,14 +4,14 @@ import { useNavigate } from "react-router-dom";
 import checkedOut from "../assets/CheckedOut.svg";
 import { MagnifyingGlassCircleIcon } from "@heroicons/react/20/solid";
 
-export default function BookListPage({ token }) {
+export default function BookListPage() {
   const [bookList, setBookList] = useState([]);
   const [limitedSearch, setLimitedSearch] = useState(false);
   const navigate = useNavigate();
   const { status, isLoading, data } = useGetAllBooksQuery();
 
   const handleViewBook = (id) => {
-    token ? navigate(`/book/${id}`) : navigate("/login");
+    localStorage.getItem('token') ? navigate(`/book/${id}`) : navigate("/login");
   };
 
   const handleSearch = (e) => {

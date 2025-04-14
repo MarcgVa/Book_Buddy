@@ -1,7 +1,11 @@
 import React from 'react'
 import logo from '../assets/book_buddy_logo.png'
-export default function HomePage() {
 
+
+
+
+
+export default function HomePage() {
 
   return (
     <div className="container flex flex-col justify-center">
