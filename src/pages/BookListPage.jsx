@@ -1,42 +1,42 @@
 import React,{ useEffect, useState } from 'react'
 import { useGetAllBooksQuery } from '../components/bookSlice'
 import { useNavigate } from 'react-router-dom'
-import { Tooltip } from 'flowbite-react';
 import checkedOut from '../assets/CheckedOut.svg'
+import { MagnifyingGlassCircleIcon } from "@heroicons/react/20/solid";
 
 export default function BookListPage({ token }) {
   const [bookList, setBookList] = useState([]);
+  const [limitedSearch, setLimitedSearch] = useState(false);
   const navigate = useNavigate();
   const { status, isLoading, data } = useGetAllBooksQuery();
   
   const handleViewBook = (id) => {
     token ? navigate(`/book/${id}`) : navigate('/login')
-  }
+  };
 
   const handleSearch = (e) => {
-    
-    if (sessionStorage.getItem("searchOnlyAvailableBooks")) {
-      const searchResults = bookList.filter((item) =>
-        item.title.toLowerCase().includes(e.target.value.toLowerCase())
-      );
-      setBookList(searchResults);
-        
-    } else {
-      const searchResults = data.filter((item) =>
-        item.title.toLowerCase().includes(e.target.value.toLowerCase()));
+    let searchResults = [];
+    console.log(sessionStorage.getItem('searchOnlyAvailableBooks'))
+    if (limitedSearch) {
+      console.log("limitedSearch()",limitedSearch);
+      searchResults = data.filter((item) => item.title.toLowerCase().includes(e.target.value.toLowerCase()) && item.available);
       setBookList(searchResults); 
+      
+    } else {
+      searchResults = data.filter((item) => item.title.toLowerCase().includes(e.target.value.toLowerCase()));
+       setBookList(searchResults); 
     }
+     
   };
 
   const handleAvailableBooksOnly = (e) => {
     if (e.target.checked) {
-      sessionStorage.setItem('searchOnlyAvailableBooks', e.target.checked);
       const availableBooksOnly = data.filter((item) => item.available);
       setBookList(availableBooksOnly);
-    } else { 
+    } else {
       setBookList(data);
     }
-  }
+  };
 
   useEffect(() => {
     if (status.toLowerCase() === 'fulfilled') {
@@ -62,16 +62,15 @@ export default function BookListPage({ token }) {
             type="search"
             placeholder="Search"
             aria-label="Search"
+            className="col-start-1 row-start-1 block w-full rounded-md py-1.5 pr-3 pl-10 text-base text-white outline-hidden placeholder:text-gray-400 focus:bg-white focus:text-gray-900 focus:placeholder:text-gray-400 sm:text-sm/6"
             onChange={handleSearch}
-            className="col-start-1 row-start-1 block w-full rounded-md bg-gray-700 py-1.5 pr-3 pl-10 text-base text-white outline-hidden placeholder:text-gray-400 focus:bg-white focus:text-gray-900 focus:placeholder:text-gray-400 sm:text-sm/6"
           />
-          <p
+          <MagnifyingGlassCircleIcon
             aria-hidden="true"
             className="pointer-events-none col-start-1 row-start-1 ml-3 size-5 self-center text-gray-400"
-          >
-            <span className="material-icons">search</span>
-          </p>
+          />
         </div>
+      
         <div className=" flex ml-4 items-center">
           <input
             id="isAvaiable"
