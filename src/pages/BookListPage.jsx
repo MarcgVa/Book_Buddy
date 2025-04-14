@@ -3,6 +3,7 @@ import { useGetAllBooksQuery } from "../services/bookService";
 import { useNavigate } from "react-router-dom";
 import checkedOut from "../assets/CheckedOut.svg";
 import { MagnifyingGlassCircleIcon } from "@heroicons/react/20/solid";
+import { Bounce, ToastContainer, toast } from "react-toastify";
 
 export default function BookListPage({ token }) {
   const [bookList, setBookList] = useState([]);
@@ -50,6 +51,14 @@ export default function BookListPage({ token }) {
 
   return (
     <div className="container max-w-[1224px] w-[90%]">
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick={true}
+        rtl={true}
+      />
       <div className="flex bg-white border-0 z-100 flex-col sticky top-0 pb-10">
         <div className="flex justify-center">
           <p
