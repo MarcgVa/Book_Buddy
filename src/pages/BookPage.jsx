@@ -6,6 +6,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import book from "../assets/book.png";
+import { Bounce, ToastContainer, toast } from "react-toastify";
+
 
 export default function BookPage({ token }) {
   const { bookid } = useParams();
@@ -13,11 +15,30 @@ export default function BookPage({ token }) {
   const [checkOutBook] = useCheckOutBookMutation();
   const navigate = useNavigate();
 
+  const notify = (type, message) => {
+    toast(message, {
+        type: type,
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: true,
+        progress: undefined,
+      closeOnClick: true,
+        theme: "colored",
+        transition: Bounce,
+      });
+    
+  }
+
   const handleBookReservation = async (bookid) => {
     try {
-      await checkOutBook(bookid).unwrap();
+      const response = await checkOutBook(bookid).unwrap();
+
+      if (response) {
+        notify('success', 'Book was successfully reserved');
+      }
     } catch (error) {
-      console.error(error.message);
+       notify("warning", "Book was not reserved");  
+      notify(error.message);
     }
   };
 
@@ -27,6 +48,14 @@ export default function BookPage({ token }) {
 
   return (
     <div className="container ml-20 bg-white h-full w-full ">
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick={true}
+        rtl={true}
+      />
       <div>
         <p
           className="m-4 mt-10 
