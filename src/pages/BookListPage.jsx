@@ -1,7 +1,7 @@
-import React,{ useEffect, useState } from 'react'
-import { useGetAllBooksQuery } from '../components/bookSlice'
-import { useNavigate } from 'react-router-dom'
-import checkedOut from '../assets/CheckedOut.svg'
+import React, { useEffect, useState } from "react";
+import { useGetAllBooksQuery } from "../services/bookService";
+import { useNavigate } from "react-router-dom";
+import checkedOut from "../assets/CheckedOut.svg";
 import { MagnifyingGlassCircleIcon } from "@heroicons/react/20/solid";
 
 export default function BookListPage({ token }) {
@@ -9,24 +9,28 @@ export default function BookListPage({ token }) {
   const [limitedSearch, setLimitedSearch] = useState(false);
   const navigate = useNavigate();
   const { status, isLoading, data } = useGetAllBooksQuery();
-  
+
   const handleViewBook = (id) => {
-    token ? navigate(`/book/${id}`) : navigate('/login')
+    token ? navigate(`/book/${id}`) : navigate("/login");
   };
 
   const handleSearch = (e) => {
     let searchResults = [];
-    console.log(sessionStorage.getItem('searchOnlyAvailableBooks'))
+    console.log(sessionStorage.getItem("searchOnlyAvailableBooks"));
     if (limitedSearch) {
-      console.log("limitedSearch()",limitedSearch);
-      searchResults = data.filter((item) => item.title.toLowerCase().includes(e.target.value.toLowerCase()) && item.available);
-      setBookList(searchResults); 
-      
+      console.log("limitedSearch()", limitedSearch);
+      searchResults = data.filter(
+        (item) =>
+          item.title.toLowerCase().includes(e.target.value.toLowerCase()) &&
+          item.available
+      );
+      setBookList(searchResults);
     } else {
-      searchResults = data.filter((item) => item.title.toLowerCase().includes(e.target.value.toLowerCase()));
-       setBookList(searchResults); 
+      searchResults = data.filter((item) =>
+        item.title.toLowerCase().includes(e.target.value.toLowerCase())
+      );
+      setBookList(searchResults);
     }
-     
   };
 
   const handleAvailableBooksOnly = (e) => {
@@ -40,14 +44,14 @@ export default function BookListPage({ token }) {
   };
 
   useEffect(() => {
-    if (status.toLowerCase() === 'fulfilled') {
+    if (status.toLowerCase() === "fulfilled") {
       setBookList(data);
     }
   }, [status]);
 
   return (
     <div className="container max-w-[1224px] w-[90%]">
-      <div className='flex bg-white border-0 z-100 flex-col sticky top-0 pb-10'>
+      <div className="flex bg-white border-0 z-100 flex-col sticky top-0 pb-10">
         <div className="flex justify-center">
           <p
             className="w-max p-3 text-5xl text-sky-600 font-bold tracking-wider 

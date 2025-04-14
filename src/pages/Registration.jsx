@@ -1,38 +1,33 @@
 import React, { useState } from "react";
 import logo from "../assets/book_buddy_logo.png";
-import { useRegisterMutation } from "../components/authSlice";
+import { useRegisterMutation } from "../services/authService";
 import { useNavigate } from "react-router-dom";
 
-
-
 export default function Registration() {
-
   const [regData, setRegData] = useState({
     firstname: "",
     lastname: "",
     email: "",
-    password:"",
+    password: "",
   });
   const navigate = useNavigate();
   const [register] = useRegisterMutation();
 
   const handleSubmit = async (submit) => {
     submit.preventDefault();
-    
+
     const response = await register(regData).unwrap();
-    if (response) { 
-      navigate('/')
+    if (response) {
+      navigate("/");
     }
-}
+  };
 
   const handleUpdate = (e) => {
     setRegData((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     }));
   };
-
-
 
   return (
     <div className="container">

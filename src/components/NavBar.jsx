@@ -1,19 +1,25 @@
-import React, { useState } from "react"
-import { ChevronLeftIcon, HomeIcon, StarIcon, RectangleGroupIcon, UserIcon, BookOpenIcon, LockClosedIcon, LockOpenIcon } from "@heroicons/react/20/solid";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useLogoutMutation } from "../services/authService";
 
-export default function NavBar({ token, setToken }) {
+export default function NavBar() {
   const [open, setOpen] = useState(true);
   const navigate = useNavigate();
+  const [logout] = useLogoutMutation();
+  const token = localStorage.getItem("token");
+  const handleNavigation = (page) => {
+    token ? navigate(page) : navigate("/login");
+  };
+  const handleLogout = async () => {
+    localStorage.removeItem("token");
+    try {
+      await logout();
+    } catch (error) {
+      console.error(error.message);
+    }
 
-  const handleNavigation = (page) => { 
-    token? navigate(page) : navigate('/login');
-  }
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    setToken(null);
-    navigate('/');
-  }
+    navigate("/");
+  };
 
   return (
     <div className="flex h-full sticky top-0 left-0">
@@ -98,7 +104,7 @@ export default function NavBar({ token, setToken }) {
             )}
           </div>
         </div>
-        <div onClick={()=>setOpen(!open)}>
+        <div onClick={() => setOpen(!open)}>
           {!open ? (
             <span className="material-icons text-sky-200 absolute -right-0 bottom-4 cursor-pointer">
               chevron_right

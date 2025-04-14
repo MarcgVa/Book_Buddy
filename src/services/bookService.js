@@ -15,19 +15,38 @@ const bookResApi = api.injectEndpoints({
         method: 'POST',
         body: {bookId},
       }),
-      invalidatesTags:['Reservations'],
+      invalidatesTags:['Reservations','User'],
     }),
     checkInBook: builder.mutation({
       query: (bookId) => ({
         url: `/reservations/${bookId}`,
         method: 'DELETE',
       }),
-      invalidatesTags:['Reservations']
-    })
+      invalidatesTags:['Reservations','User']
+    }),
+    getAllBooks: builder.query({
+      query: () => ({
+        url: '/books',
+        method: 'GET'
+      }),
+      providesTags: ["Book"],
+    }),
+    getBook: builder.query({
+      query: (id) => ({
+        url: `/books/${id}`,
+        method: 'GET',
+      }),
+    }),
   })
 })
 
 
 
 
-export const { useCheckInBookMutation, useCheckOutBookMutation, useGetReservationsQuery } = bookResApi;
+export const {
+  useGetAllBooksQuery,
+  useGetBookQuery,
+  useCheckInBookMutation,
+  useCheckOutBookMutation,
+  useGetReservationsQuery
+} = bookResApi;
