@@ -30,6 +30,7 @@ export default function BookListPage({ token }) {
   };
 
   const handleAvailableBooksOnly = (e) => {
+    setLimitedSearch(e.target.checked);
     if (e.target.checked) {
       const availableBooksOnly = data.filter((item) => item.available);
       setBookList(availableBooksOnly);
