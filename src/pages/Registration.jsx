@@ -34,9 +34,6 @@ export default function Registration() {
 
 
 
-
-
-
   return (
     <div className="container">
       Registration

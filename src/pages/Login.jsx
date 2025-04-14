@@ -16,7 +16,6 @@ export default function Login({ setToken }) {
 
     const response = await login(loginData).unwrap();
     if (response) {
-      console.log('login', response);
       setToken(response.token);
       navigate("/");
     }

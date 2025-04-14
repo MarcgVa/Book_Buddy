@@ -7,16 +7,13 @@ import book from "../assets/book.png";
 
 export default function BookPage({ token }) {
   const { bookid } = useParams();
-  console.log('bookid', bookid);
   const { data } = useGetBookQuery(bookid);
   const [checkOutBook] = useCheckOutBookMutation();
   const navigate = useNavigate();
 
   const handleBookReservation = async (bookid) => {
     try {
-      const response = await checkOutBook(bookid).unwrap();
-      console.log('response',response);
-      navigate("/account");
+      await checkOutBook(bookid).unwrap();
     } catch (error) {
       console.error(error.message);
     }

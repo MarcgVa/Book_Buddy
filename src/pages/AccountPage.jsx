@@ -5,7 +5,7 @@ import { useCheckInBookMutation, useGetReservationsQuery } from '../components/b
 
 
 export default function AccountPage() {
-  const navigate = useNavigate();
+  const navigate = useNavigate;
     const [checkInBook] = useCheckInBookMutation();
   const { status, data: user } = useGetAccountQuery();
   const { status: resStatus,data: updateReservations } = useGetReservationsQuery();

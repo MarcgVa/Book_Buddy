@@ -98,7 +98,7 @@ export default function NavBar({ token, setToken }) {
             )}
           </div>
         </div>
-        <div div onClick={()=>setOpen(!open)}>
+        <div onClick={()=>setOpen(!open)}>
           {!open ? (
             <span className="material-icons text-sky-200 absolute -right-0 bottom-4 cursor-pointer">
               chevron_right
