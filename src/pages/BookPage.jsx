@@ -21,10 +21,10 @@ export default function BookPage() {
     toast(message, {
         type: type,
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 2000,
         hideProgressBar: true,
         progress: undefined,
-      closeOnClick: true,
+        closeOnClick: true,
         theme: "colored",
         transition: Bounce,
       });
@@ -36,12 +36,18 @@ export default function BookPage() {
       const response = await checkOutBook(bookid).unwrap();
 
       if (response) {
-        notify('success', 'Book was successfully reserved');
+        notify("success", "Book was successfully reserved");
+       setTimeout(() => {
+        navigate("/bookList");
+       }, 2000); 
+        
       }
     } catch (error) {
-       notify("warning", "Book was not reserved");  
+      notify("warning", "Book was not reserved");
       notify(error.message);
     }
+    
+  
   };
 
   useEffect(() => {
