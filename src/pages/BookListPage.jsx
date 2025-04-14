@@ -46,43 +46,45 @@ export default function BookListPage({ token }) {
 
   return (
     <div className="container max-w-[1224px] w-[90%]">
-      <div className="flex justify-center">
-        <p
-          className="w-max p-3 text-5xl text-sky-600 font-bold tracking-wider 
+      <div className='flex bg-white border-0 z-100 flex-col sticky top-0 pb-10'>
+        <div className="flex justify-center">
+          <p
+            className="w-max p-3 text-5xl text-sky-600 font-bold tracking-wider 
         text-shadow-md text-shadow-red-900"
-        >
-          The Book Buddy Book List{" "}
-        </p>
-      </div>
-
-      <div className="flex flex-1 justify-center px-2 lg:mr-20 lg:ml-10">
-        <div className="grid w-full max-w-lg grid-cols-1 lg:max-w-xs">
-          <input
-            name="search"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-            className="col-start-1 row-start-1 block w-full rounded-md py-1.5 pr-3 pl-10 text-base text-white outline-hidden placeholder:text-gray-400 focus:bg-white focus:text-gray-900 focus:placeholder:text-gray-400 sm:text-sm/6"
-            onChange={handleSearch}
-          />
-          <MagnifyingGlassCircleIcon
-            aria-hidden="true"
-            className="pointer-events-none col-start-1 row-start-1 ml-3 size-5 self-center text-gray-400"
-          />
+          >
+            The Book Buddy Book List{" "}
+          </p>
         </div>
-      
-        <div className=" flex ml-4 items-center">
-          <input
-            id="isAvaiable"
-            name="isAvailable"
-            type="checkbox"
-            onChange={(e)=>handleAvailableBooksOnly(e)}
-            aria-describedby="available-books"
-            className="rounded-sm border border-gray-600 bg-white 
+
+        <div className="flex flex-1 justify-center px-2 lg:mr-20 lg:ml-10">
+          <div className="grid w-full max-w-lg grid-cols-1 lg:max-w-xs">
+            <input
+              name="search"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+              className="col-start-1 row-start-1 block w-full rounded-md py-1.5 pr-3 pl-10 text-base text-white outline-hidden placeholder:text-gray-400 focus:bg-white focus:text-gray-900 focus:placeholder:text-gray-400 sm:text-sm/6"
+              onChange={handleSearch}
+            />
+            <MagnifyingGlassCircleIcon
+              aria-hidden="true"
+              className="pointer-events-none col-start-1 row-start-1 ml-3 size-5 self-center text-gray-400"
+            />
+          </div>
+
+          <div className=" flex ml-4 items-center">
+            <input
+              id="isAvaiable"
+              name="isAvailable"
+              type="checkbox"
+              onChange={(e) => handleAvailableBooksOnly(e)}
+              aria-describedby="available-books"
+              className="rounded-sm border border-gray-600 bg-white 
               checked:border-sky-600 checked:bg-sky-600 
              "
-          />
-          <p className='text-xs ml-2'>Show Only Available Books</p>
+            />
+            <p className="text-xs ml-2">Show Only Available Books</p>
+          </div>
         </div>
       </div>
 
