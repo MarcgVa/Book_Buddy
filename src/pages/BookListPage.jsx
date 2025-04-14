@@ -16,9 +16,8 @@ export default function BookListPage({ token }) {
 
   const handleSearch = (e) => {
     let searchResults = [];
-    console.log(sessionStorage.getItem("searchOnlyAvailableBooks"));
+    
     if (limitedSearch) {
-      console.log("limitedSearch()", limitedSearch);
       searchResults = data.filter(
         (item) =>
           item.title.toLowerCase().includes(e.target.value.toLowerCase()) &&
