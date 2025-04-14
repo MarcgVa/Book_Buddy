@@ -79,8 +79,11 @@ export default function BookListPage({ token }) {
             type="checkbox"
             onChange={(e)=>handleAvailableBooksOnly(e)}
             aria-describedby="available-books"
-            className="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
+            className="rounded-sm border border-gray-600 bg-white 
+              checked:border-sky-600 checked:bg-sky-600 
+             "
           />
+          <p className='text-xs ml-2'>Show Only Available Books</p>
         </div>
       </div>
 
@@ -90,7 +93,7 @@ export default function BookListPage({ token }) {
           <div
             key={book?.id}
             id={book?.id}
-            className="flex flex-col justify-center hover:drop-shadow-xl hover:drop-shadow-indigo-500"
+            className="flex flex-col justify-center hover:drop-shadow-xl hover:drop-shadow-sky-500"
             onClick={() => handleViewBook(book.id)}
           >
             <div className="relative">
