@@ -63,15 +63,14 @@ export default function Reservations() {
         </p>
         <ul className="flex-col justify-center w-90 h-200 overflow-scroll scroll-">
           {reservations?.map((res) => (
-            <li className="flex mb-10">
-              <img src={res.coverimage} alt="" className="w-30" />
+            <li key={res?.id} className="flex mb-10">
+              <img src={res?.coverimage} alt="" className="w-30" />
               <div className="flex-col ml-4 justify-center items-center ">
                 <p className="">
-                  <span className="text-lg font-bold">Author:</span>{" "}
-                  {res.author}
+                  <span className="text-lg font-bold">Author:</span>{res?.author}
                 </p>
                 <p>
-                  <span className="text-lg font-bold">Title:</span> {res.title}
+                  <span className="text-lg font-bold">Title:</span> {res?.title}
                 </p>
                 <button
                   onClick={() => handleCheckInBook(res?.id)}
