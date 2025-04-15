@@ -3,6 +3,7 @@ import AccountSettings from "../components/Account/AccountSettings";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+
 export default function AccountPage() {
   const navigate = useNavigate();
 

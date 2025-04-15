@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLogoutMutation } from "../services/authService";
+import { ToastContainer} from "react-toastify";
+import notify from "../utils/notification";
 
 export default function NavBar() {
   const [open, setOpen] = useState(true);
@@ -8,7 +10,15 @@ export default function NavBar() {
   const [logout] = useLogoutMutation();
   const token = localStorage.getItem("token");
   const handleNavigation = (page) => {
-    token ? navigate(page) : navigate("/login");
+    if (token) { 
+      navigate(page)
+    } else {
+     
+      notify('info', 'Denied: Login Required', 2000);
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
+    }
   };
   const handleLogout = async () => {
     localStorage.removeItem("token");
@@ -18,6 +28,14 @@ export default function NavBar() {
 
   return (
     <div className="flex h-full sticky top-0 left-0">
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick={true}
+        rtl={true}
+      />
       <div
         className={`bg-sky-950 h-screen ${
           open ? "w-35" : " w-15"

@@ -4,10 +4,9 @@ import {
   useGetBookQuery,
 } from "../services/bookService";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import book from "../assets/book.png";
-import { Bounce, ToastContainer, toast } from "react-toastify";
-
+import { ToastContainer} from "react-toastify";
+import notify from "../utils/notification";
 
 
 
@@ -17,42 +16,35 @@ export default function BookPage() {
   const [checkOutBook] = useCheckOutBookMutation();
   const navigate = useNavigate();
 
-  const notify = (type, message) => {
-    toast(message, {
-        type: type,
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: true,
-        progress: undefined,
-        closeOnClick: true,
-        theme: "colored",
-        transition: Bounce,
-      });
-    
-  }
 
   const handleBookReservation = async (bookid) => {
     try {
+
+      if (!localStorage.getItem("token")) {
+        notify('error', 'You must be logged in to checkout a book',1500);
+        notify('info', 'You are being redirected to login',1500);
+
+        setTimeout(() => {
+        navigate("/login");  
+        }, 3000);
+        
+       } 
       const response = await checkOutBook(bookid).unwrap();
 
       if (response) {
-        notify("success", "Book was successfully reserved");
+        notify("success", "Book was successfully reserved",2000);
        setTimeout(() => {
         navigate("/bookList");
        }, 2000); 
         
       }
     } catch (error) {
-      notify("warning", "Book was not reserved");
+      notify("warning", "Book was not reserved",2000);
       notify(error.message);
     }
     
   
   };
-
-  useEffect(() => {
-    localStorage.getItem("token") ? null : navigate("/login");
-  }, []);
 
   return (
     <div className="container ml-20 bg-white h-full w-full ">
